@@ -32,6 +32,5 @@ if __name__ == "__main__":
     merged.drop_duplicates()
 
 
-    with open("OrchestralManoeuvresInData/merged.csv","w") as file_out:
+    with open("./datasets/merged.csv","w") as file_out:
         merged.to_csv(file_out, encoding="utf-8")
-    
