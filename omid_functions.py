@@ -1,5 +1,5 @@
 import pandas as pd
-
+#commento inutile
 orchestra_dataframe = pd.read_csv("./datasets/merged.csv")
 
 #this function prints a synopsis of the event based on the given ID
