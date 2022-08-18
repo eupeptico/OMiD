@@ -195,7 +195,6 @@ if __name__ == "__main__":
     ranking_of_composers(orchestra_dataframe)
     print("ranking of venues:\n")
     ranking_of_venues(orchestra_dataframe)
-
     print("best orchestra:\n")
     best_orchestra(orchestra_dataframe)
     print("best conductor\n")

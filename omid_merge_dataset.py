@@ -6,9 +6,9 @@ import re
 if __name__ == "__main__":
     
     #make sure to identify the right datasets in .csv format
-    concerts = pd.read_csv("./datasets_original/concerts.csv")
-    works = pd.read_csv("./datasets_original/works.csv")
-    solo = pd.read_csv("./datasets_original/soloists.csv")
+    concerts = pd.read_csv("./datasets_original/concerts.csv", encoding="utf-8")
+    works = pd.read_csv("./datasets_original/works.csv", encoding="utf-8")
+    solo = pd.read_csv("./datasets_original/soloists.csv", encoding="utf-8")
 
     #removing phonetical characters (contained in square brackets) from names
     works["ConductorName"] = works["ConductorName"].apply(lambda x : re.sub("[\(\[].*?[\)\]]", "", x))
