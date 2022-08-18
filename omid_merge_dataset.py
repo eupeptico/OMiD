@@ -21,7 +21,8 @@ if __name__ == "__main__":
     solo["Soloist_Name"] = solo["Soloist_Name"].apply(lambda x : re.sub("[\(\[].*?[\)\]]", "", x))
     
     #note that null strings("") get interpreted as np.nan (Not a Number) by pandas
-    #which is of type <class 'float'>
+    #which is of type <class 'float'>, while other "Instruments" are clearly of <class 'str'>
+
     i=1
     while type(solo["Soloist_Instrument"].iloc[-i]) == float:
         solo["Soloist_Instrument"].iloc[-i] = "Unknown Istrument"
