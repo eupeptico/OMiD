@@ -20,13 +20,12 @@ if __name__ == "__main__":
     # which means: "substitute everything between square brackets with a null character"
     works["ComposerName"] = works["ComposerName"].apply(lambda x : re.sub("[\(\[].*?[\)\]]", "", x))
     solo["Soloist_Name"] = solo["Soloist_Name"].apply(lambda x : re.sub("[\(\[].*?[\)\]]", "", x))
-    
     #note that null strings("") get interpreted as np.nan (Not a Number) by pandas
     #which is of type <class 'float'>, while other "Instruments" are clearly of <class 'str'>
     
     i=1
     while type(solo["Soloist_Instrument"].iloc[-i]) == float:
-        solo["Soloist_Instrument"].iloc[-i] = "Unknown Istrument"
+        solo["Soloist_Instrument"].iloc[-i] = "Unknown Instrument"
         i+=1
 
     #if we want to eliminate rows with missing values 
@@ -42,5 +41,5 @@ if __name__ == "__main__":
     #dropping duplicates with a pandas function designed to do so.
     merged.drop_duplicates()
 
-    with open("./datasets/merged.csv","w") as file_out:
+    with open("./datasets/merged.csv","w",encoding="utf-8") as file_out:
         merged.to_csv(file_out, encoding="utf-8")
