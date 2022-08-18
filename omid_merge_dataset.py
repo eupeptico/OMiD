@@ -6,9 +6,9 @@ import re
 if __name__ == "__main__":
     
     #make sure to identify the right datasets in .csv format
-    concerts = pd.read_csv("./datasets/concerts.csv")
-    works = pd.read_csv("./datasets/works.csv")
-    solo = pd.read_csv("./datasets/soloists.csv")
+    concerts = pd.read_csv("./datasets_original/concerts.csv")
+    works = pd.read_csv("./datasets_original/works.csv")
+    solo = pd.read_csv("./datasets_original/soloists.csv")
 
     #removing phonetical characters (contained in square brackets) from names
     works["ConductorName"] = works["ConductorName"].apply(lambda x : re.sub("[\(\[].*?[\)\]]", "", x))
@@ -23,12 +23,11 @@ if __name__ == "__main__":
     
     #note that null strings("") get interpreted as np.nan (Not a Number) by pandas
     #which is of type <class 'float'>, while other "Instruments" are clearly of <class 'str'>
-    
     i=1
     while type(solo["Soloist_Instrument"].iloc[-i]) == float: #NaN is a float
         solo["Soloist_Instrument"].iloc[-i] = "Unknown Instrument"
         i+=1
-       
+
     #if we want to eliminate rows with missing values 
     ##solo.dropna(subset=["Soloist_Instrument"], inplace=True)
     
