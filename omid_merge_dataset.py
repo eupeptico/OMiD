@@ -26,8 +26,8 @@ if __name__ == "__main__":
     #delete lines with empty values (in soloists.csv)
 
     i=1
-    while type(solo["Soloist_Instrument"].iloc[-i]) == float:
-        solo["Soloist_Instrument"].iloc[-i] = "Unknown Istrument"
+    while type(solo["Soloist_Instrument"].iloc[-i]) == float: #NaN is a float
+        solo["Soloist_Instrument"].iloc[-i] = "Unknown Instrument"
         i+=1
        
     #if we want to eliminate rows with missing values 
