@@ -24,6 +24,8 @@ if __name__ == "__main__":
     #note that null strings("") get interpreted as np.nan (Not a Number) by pandas
     #which is of type <class 'float'>, while other "Instruments" are clearly of <class 'str'>
     #delete lines with empty values (in soloists.csv)
+    print(solo["Soloist_Instrument"].iloc[-1].isnull())
+
 
     i=1
     while type(solo["Soloist_Instrument"].iloc[-i]) == float:
