@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 #the below imports from the other code the two functions requested
 from omid_functions import ranking_of, most_time_played
 
-orchestra_dataframe = pd.read_csv("./datasets/merged.csv")
+orchestra_dataframe = pd.read_csv("./datasets/merged.csv",encoding="utf-8")
 #helper functions
 def get_surname(full_name : str):
     #mainly to get cleaner graphs by keeping only the surname to identify people
