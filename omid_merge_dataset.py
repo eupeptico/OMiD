@@ -23,15 +23,14 @@ if __name__ == "__main__":
     
     #note that null strings("") get interpreted as np.nan (Not a Number) by pandas
     #which is of type <class 'float'>, while other "Instruments" are clearly of <class 'str'>
-    #delete lines with empty values (in soloists.csv)
-
+    
     i=1
     while type(solo["Soloist_Instrument"].iloc[-i]) == float: #NaN is a float
         solo["Soloist_Instrument"].iloc[-i] = "Unknown Instrument"
         i+=1
        
     #if we want to eliminate rows with missing values 
-    #solo.dropna(subset=["Soloist_Instrument"], inplace=True)
+    ##solo.dropna(subset=["Soloist_Instrument"], inplace=True)
     
     #merging dataframes
     dfs=[concerts,works,solo]
