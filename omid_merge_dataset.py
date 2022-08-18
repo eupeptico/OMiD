@@ -20,6 +20,7 @@ if __name__ == "__main__":
     # which means: "substitute everything between square brackets with a null character"
     works["ComposerName"] = works["ComposerName"].apply(lambda x : re.sub("[\(\[].*?[\)\]]", "", x))
     solo["Soloist_Name"] = solo["Soloist_Name"].apply(lambda x : re.sub("[\(\[].*?[\)\]]", "", x))
+    
     #note that null strings("") get interpreted as np.nan (Not a Number) by pandas
     #which is of type <class 'float'>, while other "Instruments" are clearly of <class 'str'>
     
