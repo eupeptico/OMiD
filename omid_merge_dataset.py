@@ -42,5 +42,5 @@ if __name__ == "__main__":
     #dropping duplicates with a pandas function designed to do so.
     merged.drop_duplicates()
 
-    with open("./datasets/merged.csv","w") as file_out:
+    with open("./datasets/merged.csv","w",encoding = "utf-8") as file_out:
         merged.to_csv(file_out, encoding="utf-8")
