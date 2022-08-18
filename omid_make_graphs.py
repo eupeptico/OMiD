@@ -68,7 +68,7 @@ def show_top_by_event_frequency (df : pd.DataFrame, what: str, how_many : int = 
     plt.title(f"Which {label(what)} is the most frequent?")
     plt.ylabel("number of Events")
     #xlabels get mixed up because of the lenght of the names
-    plt.xlabel(what)
+    #plt.xlabel(what)
     if rotate_ticks:
         plt.xticks(rotation=330)#ugly
     #plt.show() #this will make the chart pop up
