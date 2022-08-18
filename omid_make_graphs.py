@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 from omid_functions import ranking_of, most_time_played
 
 orchestra_dataframe = pd.read_csv("./datasets/merged.csv",encoding="utf-8")
-#helper functions
+
+###helper functions
 def get_surname(full_name : str):
     #mainly to get cleaner graphs by keeping only the surname to identify people
     #fails with no harm because if the string has no ", " separator, split(", ")[0] returns the full string
@@ -36,9 +37,9 @@ def label(what:str):
     return label_dictionary[what]
 
 
-###Graphs
+###Graphs###
 
-#takes all event IDs and builds an histogram of duration in mins/event ID
+## 1 - shows an histogram of duration in mins per event ID
 def duration_histo (df : pd.DataFrame):
     durations = df.loc[:,"Duration"]
     events = df.loc[:,"ID"]
@@ -53,7 +54,7 @@ def duration_histo (df : pd.DataFrame):
     plt.savefig("./charts/events_duration") #this will save the .png
 
 #shows a histogram of the top performing "what", based on the results of "ranking_of()" so the frequency, imported from orchestra.py
-def show_top_by_event_frequency (df : pd.DataFrame, what: str, how_many : int = 5,):
+def show_top_by_event_frequency (df : pd.DataFrame, what:str, how_many:int=5,):
     #(what = "ConductorName", "ComposerName", "Venue", ...)
     rotate_ticks=False
     top_whatever, events_played = ranking_of(df,what,how_many)
