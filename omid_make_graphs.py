@@ -1,10 +1,12 @@
+#!!: to make sure the two below packages work, install them using pip install [name of package]
 import pandas as pd
 import matplotlib.pyplot as plt
 #the below imports from the other code the two functions requested
 from omid_functions import ranking_of, most_time_played
 
 orchestra_dataframe = pd.read_csv("./datasets/merged.csv",encoding="utf-8")
-#helper functions
+
+###helper functions
 def get_surname(full_name : str):
     #mainly to get cleaner graphs by keeping only the surname to identify people
     #fails with no harm because if the string has no ", " separator, split(", ")[0] returns the full string
@@ -36,9 +38,9 @@ def label(what:str):
     return label_dictionary[what]
 
 
-###Graphs
+###Graphs###
 
-#takes all event IDs and builds an histogram of duration in mins/event ID
+## 1 - shows an histogram of duration in mins per event ID
 def duration_histo (df : pd.DataFrame):
     durations = df.loc[:,"Duration"]
     events = df.loc[:,"ID"]
@@ -49,11 +51,11 @@ def duration_histo (df : pd.DataFrame):
     plt.legend(loc="upper left")
     plt.ylabel("Duration in min")
     plt.xlabel("Event IDs")
-    #plt.show() #this will make the chart pop up
-    plt.savefig("./charts/events_duration") #this will save the .png
+    plt.show() #this will make the chart pop up
+    #plt.savefig("./charts/events_duration") #this will save the .png but has issues
 
 #shows a histogram of the top performing "what", based on the results of "ranking_of()" so the frequency, imported from orchestra.py
-def show_top_by_event_frequency (df : pd.DataFrame, what: str, how_many : int = 5,):
+def show_top_by_event_frequency (df : pd.DataFrame, what:str, how_many:int=5,):
     #(what = "ConductorName", "ComposerName", "Venue", ...)
     rotate_ticks=False
     top_whatever, events_played = ranking_of(df,what,how_many)
@@ -71,8 +73,8 @@ def show_top_by_event_frequency (df : pd.DataFrame, what: str, how_many : int = 
     #plt.xlabel(what)
     if rotate_ticks:
         plt.xticks(rotation=330)#ugly
-    #plt.show() #this will make the chart pop up
-    plt.savefig(f"./charts/top_{what}_by_event_frequency") #this will save the .png
+    plt.show() #this will make the chart pop up
+    #plt.savefig(f"./charts/top_{what}_by_event_frequency") #this will save the .png
 
 #shows a histogram of the top performing "what", based on the results of "most_time_played()" so the duration, imported from orchestra.py
 def show_top_by_total_duration (df : pd.DataFrame, what: str, how_many : int = 5,):
@@ -92,8 +94,8 @@ def show_top_by_total_duration (df : pd.DataFrame, what: str, how_many : int = 5
     plt.xlabel(what)
     if rotate_ticks:
         plt.xticks(rotation=330)#ugly
-    #plt.show() #this will make the chart pop up
-    plt.savefig("./charts/top_{}_by_total_duration".format(what)) #this will save the .png
+    plt.show() #this will make the chart pop up
+    #plt.savefig("./charts/top_{}_by_total_duration".format(what)) #this will save the .png
 
 
 #shows the average duration of events per whatever (year, composer, etc)
@@ -138,8 +140,8 @@ def mean_duration_per(df: pd.DataFrame, what:str):
     plt.title(f"Event's mean duration per {label(what)}")
     plt.ylabel("Mean duration in min")
     plt.xlabel(f"{label(what)}")
-    #plt.show() #this will make the chart pop up
-    plt.savefig(f"./charts/mean_duration_per_{what}") #this will save the .png
+    plt.show() #this will make the chart pop up
+    #plt.savefig(f"./charts/mean_duration_per_{what}") #this will save the .png
 
 #makes chart of durations of event in given dates (how many hours of music was played that day?)
 def daily_durations(df : pd.DataFrame):
@@ -166,8 +168,8 @@ def daily_durations(df : pd.DataFrame):
     plt.ylabel("Duration")
     plt.xlabel("Date")
     plt.xticks([plt_dates[0], plt_dates[-1]], visible=True, rotation="horizontal")
-    #plt.show() #this will make the chart pop up
-    plt.savefig(f"./charts/daily_durations") #this will save the .png
+    plt.show() #this will make the chart pop up
+    #plt.savefig(f"./charts/daily_durations") #this will save the .png
 
 #this calls the functions and makes the charts
 if __name__ == "__main__":
