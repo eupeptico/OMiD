@@ -152,23 +152,22 @@ def mean_duration_per(df: pd.DataFrame, what:str):
 def events_per_month(df: pd.DataFrame):
 
     dates = df.loc[:,"Date"]
-    events = df.loc[:,"ID"]
+    #events = df.loc[:,"ID"]
 
     #applying function "month_of"
     month_set = set(dates.apply(month_of))
 
     #dictionary to link months to events played in that month using event ID (12 months, IDs in each month)
-    eventsID_in_month=dict.fromkeys(month_set,set())
+    eventsID_in_month=dict.fromkeys(month_set,0)
     
     #populate the events per month dictionary
-    for date,event in zip(dates,events):
-        eventsID_in_month[month_of(date)].add(event)
+    for date in set(dates):
+        eventsID_in_month[month_of(date)]+=1
 
-    print(eventsID_in_month)
-    
-    plt_months,pltplt_events = zip(*sorted(zip(eventsID_in_month.keys(),eventsID_in_month.values())))
+
+    plt_months,plt_events = zip(*sorted(zip(eventsID_in_month.keys(),eventsID_in_month.values())))
     #plt_months = eventsID_in_month.keys()
-    plt_events = [len(x) for x in pltplt_events]
+    #plt_events = [len(x) for x in pltplt_events]
 
     #plotting part
     plt.bar(tuple(plt_months),tuple(plt_events))
