@@ -3,7 +3,7 @@ import pandas as pd
 import re
 
 #the below identifies the text as main, for when it will be imported by other .py
-if __name__ == "__main__":
+def merge():
     
     #make sure to identify the right datasets in .csv format
     concerts = pd.read_csv("./datasets_original/concerts.csv", encoding="utf-8")

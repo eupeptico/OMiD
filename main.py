@@ -1,23 +1,49 @@
-import omid_functions as function
-import omid_make_graphs as graph
-import omid_merge_dataset as merge
+import omid_functions as of
+import omid_make_graphs as og
+import omid_merge_dataset as om
+
 
 def main():
-    graph.duration_histo(graph.orchestra_dataframe)
-    graph.show_top_by_event_frequency(graph.orchestra_dataframe,"ComposerName",10)
-    graph.show_top_by_event_frequency(graph.orchestra_dataframe,"Orchestra",3)
-    graph.show_top_by_event_frequency(graph.orchestra_dataframe,"ConductorName",7)
-    graph.show_top_by_event_frequency(graph.orchestra_dataframe,"Start_Time")
-    graph.show_top_by_event_frequency(graph.orchestra_dataframe,"Duration",9)
-    graph.mean_duration_per(graph.orchestra_dataframe,"Date")
-    graph.mean_duration_per(graph.orchestra_dataframe,"ComposerName")
-    graph.mean_duration_per(graph.orchestra_dataframe,"Venue")
-    graph.show_top_by_total_duration(graph.orchestra_dataframe,"ConductorName",15)
-    graph.show_top_by_total_duration(graph.orchestra_dataframe,"Venue",10)
-    graph.show_top_by_total_duration(graph.orchestra_dataframe,"Orchestra",8)
-    graph.show_top_by_total_duration(graph.orchestra_dataframe,"ComposerName",7)
-    graph.show_top_by_total_duration(graph.orchestra_dataframe,"Event_Type",5)
-    graph.daily_durations(graph.orchestra_dataframe)
+
+    #merging datesets
+    om.merge()
+    #dataframe
+    orchestra_dataframe = of.pd.read_csv("./datasets/merged.csv",encoding="utf-8")
+
+    #CLI PART
+    print("ranking of conductors:\n")
+    of.ranking_of_conductors(orchestra_dataframe)
+    print("ranking of composers:\n")
+    of.ranking_of_composers(orchestra_dataframe)
+    print("ranking of venues:\n")
+    of.ranking_of_venues(orchestra_dataframe)
+    print("best orchestra:\n")
+    of.best_orchestra(orchestra_dataframe)
+    print("best conductor\n")
+    of.most_frequent_conductor(orchestra_dataframe)
+    print("best venue\n")
+    of.most_frequent_venue(orchestra_dataframe)
+    print("best composer\n")
+    of.most_frequent_composer(orchestra_dataframe)
+
+
+    #GRAPH PART
+    og.duration_histo(orchestra_dataframe)
+    og.show_top_by_event_frequency(orchestra_dataframe,"ComposerName",10)
+    og.show_top_by_event_frequency(orchestra_dataframe,"Orchestra",3)
+    og.show_top_by_event_frequency(orchestra_dataframe,"ConductorName",7)
+    og.show_top_by_event_frequency(orchestra_dataframe,"Start_Time")
+    og.show_top_by_event_frequency(orchestra_dataframe,"Duration",9)
+    og.mean_duration_per(orchestra_dataframe,"Date")
+    og.mean_duration_per(orchestra_dataframe,"ComposerName")
+    og.mean_duration_per(orchestra_dataframe,"Venue")
+    og.show_top_by_total_duration(orchestra_dataframe,"ConductorName",15)
+    og.show_top_by_total_duration(orchestra_dataframe,"Venue",10)
+    og.show_top_by_total_duration(orchestra_dataframe,"Orchestra",8)
+    og.show_top_by_total_duration(orchestra_dataframe,"ComposerName",7)
+    og.show_top_by_total_duration(orchestra_dataframe,"Event_Type",5)
+    og.daily_durations(orchestra_dataframe)
+    og.events_per_month(orchestra_dataframe)
 
 if __name__ == "__main__":
     main()

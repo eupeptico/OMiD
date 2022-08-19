@@ -1,5 +1,4 @@
 import pandas as pd
-orchestra_dataframe = pd.read_csv("./datasets/merged.csv")
 
 #this function prints a synopsis of the event based on the given ID
 def get_event_info(df : pd.DataFrame ,event_ID: int):
@@ -188,6 +187,7 @@ def most_time_played(df : pd.DataFrame, what : str, how_many : int = 5):
     
 #this executes the functions and prints the results
 if __name__ == "__main__":
+    orchestra_dataframe = pd.read_csv("./datasets/merged.csv",encoding="utf-8")
     print("ranking of conductors:\n")
     ranking_of_conductors(orchestra_dataframe)
     print("ranking of composers:\n")

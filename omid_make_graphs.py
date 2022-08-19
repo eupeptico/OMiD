@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #the below imports from the other code the two functions requested
 from omid_functions import ranking_of, most_time_played
 
-orchestra_dataframe = pd.read_csv("./datasets/merged.csv",encoding="utf-8")
+
 
 ###helper functions
 def get_surname(full_name : str):
@@ -148,28 +148,51 @@ def mean_duration_per(df: pd.DataFrame, what:str):
     plt.show() #this will make the chart pop up
     #plt.savefig(f"./charts/mean_duration_per_{what}") #this will save the .png
 
+
+
 ## shows number events per (absolute) month (number of months in each date)
 def events_per_month(df: pd.DataFrame):
 
-    dates = df.loc[:,"Date"]
+    events = df.loc[:,"ID"]
     
-    #applying function "month_of"
-    month_set = set(dates.apply(month_of))
+
+    #create the set explicitly instead of applying "month_of()" to the entire dataframe
+    month_set = {"01","02","03","04","05","06","07","08","09","10","11","12"}
 
     #dictionary to link months to events played in that month using event ID (12 months, IDs in each month)
     eventsID_in_month=dict.fromkeys(month_set,0)
-    
-    #populate the events per month dictionary
-    for date in set(dates):
-        eventsID_in_month[month_of(date)]+=1
+    id_to_dates = dict.fromkeys(set(events),set())
 
+    #populate the events per month dictionary
+    for event in set(events):
+        id_to_dates[event] = set(df.loc[df["ID"]==event]["Date"])
+
+    for d in id_to_dates.values():
+        for date in d:
+            eventsID_in_month[month_of(date)]+=1
+
+    
+    
+    print(eventsID_in_month)
+    print("sum(eventsID_in_month.values())= ",sum(eventsID_in_month.values()))
+    print("len(set(df.loc[:,""ID""]))= ",len(set(df.loc[:,"ID"])))
+    print("len(df.loc[:,""ID""])= ",len(df.loc[:,"ID"]))
     plt_months,plt_events = zip(*sorted(zip(eventsID_in_month.keys(),eventsID_in_month.values())))
     
     #plotting part
-    plt.bar(tuple(plt_months),tuple(plt_events))
+    fig, ax = plt.subplots()
+    
+    ax.bar(tuple(plt_months),tuple(plt_events))
     plt.title("Number of events per month (overall)")
     plt.ylabel("Number of events")
-    #plt.xlabel(f"{label(what)}")
+    plt.yticks([])
+    
+
+
+    for rect, label in zip(ax.patches, plt_events):
+        height = rect.get_height()
+        ax.text(rect.get_x() + rect.get_width() / 2, height+0.01, label, ha='center', va='bottom')
+
     plt.show() #this will make the chart pop up
     #plt.savefig(f"./charts/mean_duration_per_{what}") #this will save the .png
 
@@ -204,54 +227,25 @@ def daily_durations(df : pd.DataFrame):
 
 ##this calls the functions and makes the charts
 if __name__ == "__main__":
-
-    # duration_histo(orchestra_dataframe)
-    # show_top_by_event_frequency(orchestra_dataframe,"ComposerName",10)
-    # show_top_by_event_frequency(orchestra_dataframe,"Orchestra",3)
-    # show_top_by_event_frequency(orchestra_dataframe,"ConductorName",7)
-    # show_top_by_event_frequency(orchestra_dataframe,"Start_Time")
-    # show_top_by_event_frequency(orchestra_dataframe,"Duration",9)
-    # show_top_by_event_frequency(orchestra_dataframe,"Soloist_Name")
-    # mean_duration_per(orchestra_dataframe,"Date")
-    # mean_duration_per(orchestra_dataframe,"ComposerName")
-    # mean_duration_per(orchestra_dataframe,"Venue")
-    # show_top_by_total_duration(orchestra_dataframe,"ConductorName",15)
-    # show_top_by_total_duration(orchestra_dataframe,"Venue",10)
-    # show_top_by_total_duration(orchestra_dataframe,"Orchestra",8)
-    # show_top_by_total_duration(orchestra_dataframe,"ComposerName",7)
-    # show_top_by_total_duration(orchestra_dataframe,"Event_Type",5)
-    # show_top_by_total_duration(orchestra_dataframe,"Soloist_Name")
-    # daily_durations(orchestra_dataframe)
+    orchestra_dataframe = pd.read_csv("./datasets/merged.csv",encoding="utf-8")
+    duration_histo(orchestra_dataframe)
+    show_top_by_event_frequency(orchestra_dataframe,"ComposerName",10)
+    show_top_by_event_frequency(orchestra_dataframe,"Orchestra",3)
+    show_top_by_event_frequency(orchestra_dataframe,"ConductorName",7)
+    show_top_by_event_frequency(orchestra_dataframe,"Start_Time")
+    show_top_by_event_frequency(orchestra_dataframe,"Duration",9)
+    show_top_by_event_frequency(orchestra_dataframe,"Soloist_Name")
+    mean_duration_per(orchestra_dataframe,"Date")
+    mean_duration_per(orchestra_dataframe,"ComposerName")
+    mean_duration_per(orchestra_dataframe,"Venue")
+    show_top_by_total_duration(orchestra_dataframe,"ConductorName",15)
+    show_top_by_total_duration(orchestra_dataframe,"Venue",10)
+    show_top_by_total_duration(orchestra_dataframe,"Orchestra",8)
+    show_top_by_total_duration(orchestra_dataframe,"ComposerName",7)
+    show_top_by_total_duration(orchestra_dataframe,"Event_Type",5)
+    show_top_by_total_duration(orchestra_dataframe,"Soloist_Name")
+    daily_durations(orchestra_dataframe)
     events_per_month(orchestra_dataframe)
 
 
 
-    #PER DOPO
-    #from matplotlib import pyplot as plt
-    # import numpy as np
-    
-    # # Creating dataset
-    # marks = np.array([70, 50, 40, 90, 55, 85, 74, 66, 33, 11, 45, 36, 89])
-    
-    # # Creating histogram
-    # fig, ax = plt.subplots(1, 1)
-    # ax.hist(marks)
-    
-    # # Set title
-    # ax.set_title("Title")
-    
-    # # adding labels
-    # ax.set_xlabel('x-label')
-    # ax.set_ylabel('y-label')
-    
-    # # Make some labels.
-    # rects = ax.patches
-    # labels = ["label%d" % i for i in range(len(rects))]
-    
-    # for rect, label in zip(rects, labels):
-    #     height = rect.get_height()
-    #     ax.text(rect.get_x() + rect.get_width() / 2, height+0.01, label,
-    #             ha='center', va='bottom')
-    
-    # # Show plot
-    # plt.show()
