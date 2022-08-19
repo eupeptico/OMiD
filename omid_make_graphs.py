@@ -148,12 +148,11 @@ def mean_duration_per(df: pd.DataFrame, what:str):
     plt.show() #this will make the chart pop up
     #plt.savefig(f"./charts/mean_duration_per_{what}") #this will save the .png
 
-## shows the average duration of events per whatever (year, composer, etc)
+## shows number events per (absolute) month (number of months in each date)
 def events_per_month(df: pd.DataFrame):
 
     dates = df.loc[:,"Date"]
-    #events = df.loc[:,"ID"]
-
+    
     #applying function "month_of"
     month_set = set(dates.apply(month_of))
 
@@ -164,22 +163,10 @@ def events_per_month(df: pd.DataFrame):
     for date in set(dates):
         eventsID_in_month[month_of(date)]+=1
 
-
     plt_months,plt_events = zip(*sorted(zip(eventsID_in_month.keys(),eventsID_in_month.values())))
-    #plt_months = eventsID_in_month.keys()
-    #plt_events = [len(x) for x in pltplt_events]
-
+    
     #plotting part
     plt.bar(tuple(plt_months),tuple(plt_events))
-
-    # if len(plt_whatever) >= 20:
-    #     plt.tick_params(
-    #             axis='x',          # changes apply to the x-axis
-    #             which='both',      # both major and minor ticks are affected
-    #             bottom=True,       # ticks along the bottom edge are on
-    #             top=False,         # ticks along the top edge are off
-    #             labelbottom=False) # labels along the bottom edge are off
-
     plt.title("Number of events per month (overall)")
     plt.ylabel("Number of events")
     #plt.xlabel(f"{label(what)}")
