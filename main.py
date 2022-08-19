@@ -2,8 +2,6 @@ import omid_functions as f
 import omid_make_graphs as graph
 import omid_merge_dataset as m
 
-
-
 def main():
     graph.duration_histo(graph.orchestra_dataframe)
     graph.show_top_by_event_frequency(graph.orchestra_dataframe,"ComposerName",10)
@@ -20,10 +18,6 @@ def main():
     graph.show_top_by_total_duration(graph.orchestra_dataframe,"ComposerName",7)
     graph.show_top_by_total_duration(graph.orchestra_dataframe,"Event_Type",5)
     graph.daily_durations(graph.orchestra_dataframe)
-
-
-
-
 
 if __name__ == "__main__":
     main()
