@@ -1,6 +1,6 @@
-import omid_functions as f
+import omid_functions as function
 import omid_make_graphs as graph
-import omid_merge_dataset as m
+import omid_merge_dataset as merge
 
 def main():
     graph.duration_histo(graph.orchestra_dataframe)
