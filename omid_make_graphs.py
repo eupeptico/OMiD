@@ -1,4 +1,5 @@
 #!!: to make sure the two below packages work, install them using pip install [name of package]
+from calendar import month
 import pandas as pd
 import matplotlib.pyplot as plt
 #the below imports from the other code the two functions requested
@@ -17,6 +18,10 @@ def year_of(date : str):
     # If "date" is formatted as DD/MM/YYYY or MM/DD/YYYY, it returns the year
     # (assuming there is no data before year 1000 and after year 9999)
     return date[-4:]
+
+def month_of(date:str):
+    # returns the central 2 characters of a string (dd/MM/yyyy)
+    return date[-7:-5:]
 
 #this makes the mean of the elements of it, used later
 def mean(it): return sum(it)/len(it)
@@ -38,9 +43,9 @@ def label(what:str):
     return label_dictionary[what]
 
 
-###Graphs###
+####Graphs####
 
-## 1 - shows an histogram of duration in mins per event ID
+## shows an histogram of duration in mins per event ID
 def duration_histo (df : pd.DataFrame):
     durations = df.loc[:,"Duration"]
     events = df.loc[:,"ID"]
@@ -54,7 +59,7 @@ def duration_histo (df : pd.DataFrame):
     plt.show() #this will make the chart pop up
     #plt.savefig("./charts/events_duration") #this will save the .png but has issues
 
-#shows a histogram of the top performing "what", based on the results of "ranking_of()" so the frequency, imported from orchestra.py
+## shows a histogram of the top performing "what", based on the results of "ranking_of()" so the frequency, imported from orchestra.py
 def show_top_by_event_frequency (df : pd.DataFrame, what:str, how_many:int=5,):
     #(what = "ConductorName", "ComposerName", "Venue", ...)
     rotate_ticks=False
@@ -76,7 +81,7 @@ def show_top_by_event_frequency (df : pd.DataFrame, what:str, how_many:int=5,):
     plt.show() #this will make the chart pop up
     #plt.savefig(f"./charts/top_{what}_by_event_frequency") #this will save the .png
 
-#shows a histogram of the top performing "what", based on the results of "most_time_played()" so the duration, imported from orchestra.py
+## shows a histogram of the top performing "what", based on the results of "most_time_played()" so the duration, imported from orchestra.py
 def show_top_by_total_duration (df : pd.DataFrame, what: str, how_many : int = 5,):
     #(what = "ConductorName", "ComposerName", "Venue", ...)
     rotate_ticks=False
@@ -98,7 +103,7 @@ def show_top_by_total_duration (df : pd.DataFrame, what: str, how_many : int = 5
     #plt.savefig("./charts/top_{}_by_total_duration".format(what)) #this will save the .png
 
 
-#shows the average duration of events per whatever (year, composer, etc)
+## shows the average duration of events per whatever (year, composer, etc)
 def mean_duration_per(df: pd.DataFrame, what:str):
 
     whatever = df.loc[:,what]
@@ -143,7 +148,47 @@ def mean_duration_per(df: pd.DataFrame, what:str):
     plt.show() #this will make the chart pop up
     #plt.savefig(f"./charts/mean_duration_per_{what}") #this will save the .png
 
-#makes chart of durations of event in given dates (how many hours of music was played that day?)
+## shows the average duration of events per whatever (year, composer, etc)
+def events_per_month(df: pd.DataFrame):
+
+    dates = df.loc[:,"Date"]
+    events = df.loc[:,"ID"]
+
+    #applying function "month_of"
+    month_set = set(dates.apply(month_of))
+
+    #dictionary to link months to events played in that month using event ID (12 months, IDs in each month)
+    eventsID_in_month=dict.fromkeys(month_set,set())
+    
+    #populate the events per month dictionary
+    for date,event in zip(dates,events):
+        eventsID_in_month[month_of(date)].add(event)
+
+    print(eventsID_in_month)
+    
+    plt_months,pltplt_events = zip(*sorted(zip(eventsID_in_month.keys(),eventsID_in_month.values())))
+    #plt_months = eventsID_in_month.keys()
+    plt_events = [len(x) for x in pltplt_events]
+
+    #plotting part
+    plt.bar(tuple(plt_months),tuple(plt_events))
+
+    # if len(plt_whatever) >= 20:
+    #     plt.tick_params(
+    #             axis='x',          # changes apply to the x-axis
+    #             which='both',      # both major and minor ticks are affected
+    #             bottom=True,       # ticks along the bottom edge are on
+    #             top=False,         # ticks along the top edge are off
+    #             labelbottom=False) # labels along the bottom edge are off
+
+    plt.title("Number of events per month (overall)")
+    plt.ylabel("Number of events")
+    #plt.xlabel(f"{label(what)}")
+    plt.show() #this will make the chart pop up
+    #plt.savefig(f"./charts/mean_duration_per_{what}") #this will save the .png
+
+
+## makes chart of durations of event in given dates (how many hours of music was played that day?)
 def daily_durations(df : pd.DataFrame):
     dates = df.loc[:,"Date"]
     durations = df.loc[:,"Duration"]
@@ -171,21 +216,24 @@ def daily_durations(df : pd.DataFrame):
     plt.show() #this will make the chart pop up
     #plt.savefig(f"./charts/daily_durations") #this will save the .png
 
-#this calls the functions and makes the charts
+##this calls the functions and makes the charts
 if __name__ == "__main__":
 
-    duration_histo(orchestra_dataframe)
-    show_top_by_event_frequency(orchestra_dataframe,"ComposerName",10)
-    show_top_by_event_frequency(orchestra_dataframe,"Orchestra",3)
-    show_top_by_event_frequency(orchestra_dataframe,"ConductorName",7)
-    show_top_by_event_frequency(orchestra_dataframe,"Start_Time")
-    show_top_by_event_frequency(orchestra_dataframe,"Duration",9)
-    mean_duration_per(orchestra_dataframe,"Date")
-    mean_duration_per(orchestra_dataframe,"ComposerName")
-    mean_duration_per(orchestra_dataframe,"Venue")
-    show_top_by_total_duration(orchestra_dataframe,"ConductorName",15)
-    show_top_by_total_duration(orchestra_dataframe,"Venue",10)
-    show_top_by_total_duration(orchestra_dataframe,"Orchestra",8)
-    show_top_by_total_duration(orchestra_dataframe,"ComposerName",7)
-    show_top_by_total_duration(orchestra_dataframe,"Event_Type",5)
-    daily_durations(orchestra_dataframe)
+    # duration_histo(orchestra_dataframe)
+    # show_top_by_event_frequency(orchestra_dataframe,"ComposerName",10)
+    # show_top_by_event_frequency(orchestra_dataframe,"Orchestra",3)
+    # show_top_by_event_frequency(orchestra_dataframe,"ConductorName",7)
+    # show_top_by_event_frequency(orchestra_dataframe,"Start_Time")
+    # show_top_by_event_frequency(orchestra_dataframe,"Duration",9)
+    # show_top_by_event_frequency(orchestra_dataframe,"Soloist_Name")
+    # mean_duration_per(orchestra_dataframe,"Date")
+    # mean_duration_per(orchestra_dataframe,"ComposerName")
+    # mean_duration_per(orchestra_dataframe,"Venue")
+    # show_top_by_total_duration(orchestra_dataframe,"ConductorName",15)
+    # show_top_by_total_duration(orchestra_dataframe,"Venue",10)
+    # show_top_by_total_duration(orchestra_dataframe,"Orchestra",8)
+    # show_top_by_total_duration(orchestra_dataframe,"ComposerName",7)
+    # show_top_by_total_duration(orchestra_dataframe,"Event_Type",5)
+    # show_top_by_total_duration(orchestra_dataframe,"Soloist_Name")
+    # daily_durations(orchestra_dataframe)
+    events_per_month(orchestra_dataframe)
