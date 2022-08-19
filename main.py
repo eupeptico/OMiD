@@ -10,21 +10,21 @@ def main():
     #dataframe
     orchestra_dataframe = of.pd.read_csv("./datasets/merged.csv",encoding="utf-8")
 
-    #CLI PART
-    print("ranking of conductors:\n")
-    of.ranking_of_conductors(orchestra_dataframe)
-    print("ranking of composers:\n")
-    of.ranking_of_composers(orchestra_dataframe)
-    print("ranking of venues:\n")
-    of.ranking_of_venues(orchestra_dataframe)
-    print("best orchestra:\n")
-    of.best_orchestra(orchestra_dataframe)
-    print("best conductor\n")
-    of.most_frequent_conductor(orchestra_dataframe)
-    print("best venue\n")
-    of.most_frequent_venue(orchestra_dataframe)
-    print("best composer\n")
-    of.most_frequent_composer(orchestra_dataframe)
+    #Show results in command line PART
+    # print("ranking of conductors:\n")
+    # of.ranking_of_conductors(orchestra_dataframe)
+    # print("ranking of composers:\n")
+    # of.ranking_of_composers(orchestra_dataframe)
+    # print("ranking of venues:\n")
+    # of.ranking_of_venues(orchestra_dataframe)
+    # print("best orchestra:\n")
+    # of.best_orchestra(orchestra_dataframe)
+    # print("best conductor\n")
+    # of.most_frequent_conductor(orchestra_dataframe)
+    # print("best venue\n")
+    # of.most_frequent_venue(orchestra_dataframe)
+    # print("best composer\n")
+    # of.most_frequent_composer(orchestra_dataframe)
 
 
     #GRAPH PART
