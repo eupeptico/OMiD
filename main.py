@@ -1,4 +1,4 @@
-#!! to make sure the two below packages work, install them using: pip install [name of package]
+#!! to make sure the below packages work, install them using: pip install [name of package]
 import pandas as pd
 import matplotlib.pyplot as plt
 from functools import reduce
